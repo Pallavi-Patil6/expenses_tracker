@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delete Expense</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            color: #847cf0;
+        }
+        p {
+            font-size: 1.2em;
+            margin-bottom: 20px;
+        }
+        form {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            display: inline-block;
+        }
+        button {
+            background-color: #80a9ec;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        a {
+            text-decoration: none;
+            color: black;
+            margin-top: 10px;
+            display: inline-block;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <h1>Delete Expense</h1>
+    <p>Are you sure you want to delete "{{ expense.name }}"?</p>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit">Yes, delete</button>
+    </form>
+    <a href="{% url 'home' %}">Cancel</a>
+</body>
+</html>

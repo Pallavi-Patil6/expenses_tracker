@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expense Tracker</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #a5cff8;
+            color: #495057;
+        }
+
+        h1 {
+            background: #007bff;
+            color: #fff;
+            padding: 20px 0;
+            text-align: center;
+            margin: 0;
+            border-bottom: 4px solid #0056b3;
+        }
+
+        nav {
+            background: #343a40;
+            color: #fff;
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;  /* Align items to the edges */
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            margin: 0 20px;
+            padding: 10px 15px;
+            border-radius: 5px;
+            transition: background 0.3s, transform 0.2s;
+        }
+
+        nav a:hover {
+            background: #495057; /* Darker background on hover */
+            transform: scale(1.05); /* Slightly enlarge on hover */
+        }
+
+        .profile-button {
+            background-color: #007BFF;  /* Blue color */
+            color: white;
+            border: none;
+            border-radius: 20px;  /* Curved button */
+            padding: 10px 15px;  /* Padding for better appearance */
+            cursor: pointer;
+            transition: background-color 0.3s;  /* Smooth transition */
+        }
+
+        .profile-button:hover {
+            background-color: #0056b3;  /* Darker blue on hover */
+        }
+
+        h2 {
+            text-align: center;
+            margin: 20px 0;
+            font-size: 24px;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+            max-width: 600px;
+            margin: 20px auto;
+        }
+
+        ul li {
+            background: #ffffff;
+            margin: 15px 0;
+            padding: 15px;
+            border: 1px solid #ced4da;
+            border-radius: 5px;
+            display: flex;
+            justify-content: space-between;
+            box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        ul li a {
+            color: #007bff;
+            transition: color 0.3s;
+        }
+
+        ul li a:hover {
+            color: #0056b3; /* Darker color on hover */
+        }
+
+        .profile {
+            display: none;  /* Initially hidden */
+            margin-top: 20px;  /* Space above profile */
+            padding: 10px;
+            border: 1px solid #ced4da;
+            border-radius: 5px;  /* Rounded corners */
+            background-color: #f9f9f9;  /* Light background */
+        }
+    </style>
+</head>
+<body>
+    <h1>Expense Tracker</h1>
+    <nav>
+        <div>
+            <a href="{% url 'add_expense' %}">Add Expense</a>
+            <a href="{% url 'logout' %}">Logout</a>
+        </div>
+        <button class="profile-button" onclick="toggleProfile()">Profile</button>  <!-- Profile button -->
+    </nav>
+    
+    <div class="profile" id="profile">
+        <h3>your profile</h3>
+        <p>Name: {{ user.username }}</p>  <!-- Display logged-in user's name -->
+        <p>Total Amount: {{ total }}</p>  <!-- Display user's total amount -->
+    </div>
+    
+    <h2>Total Expenses: {{ total_expenses }}</h2>  <!-- Display total expenses -->
+    <p>{{ message }}</p>
+    
+    <ul>
+        {% for expense in expenses %}
+            <li>
+                {{ expense.name }} - {{ expense.amount }}
+                <span>
+                    <a href="{% url 'update_expense' expense.pk %}">Edit</a>
+                    <a href="{% url 'delete_expense' expense.pk %}">Delete</a>
+                </span>
+            </li>
+        {% empty %}
+            <li>No expenses recorded.</li>  <!-- Optional: message when no expenses -->
+        {% endfor %}
+    </ul>
+
+    <script>
+        function toggleProfile() {
+            var profileDiv = document.getElementById('profile');
+            profileDiv.style.display = (profileDiv.style.display === 'none' || profileDiv.style.display === '') ? 'block' : 'none';
+        }
+    </script>
+</body>
+</html>
